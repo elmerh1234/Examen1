@@ -18,6 +18,8 @@ namespace Examen1.Models
         {
             this.con.ConnectionString = @"Data Source=192.00.00.00; Initial Catalog=examen1ds39; User ID=sa;Password=Passw0rd;";
 
+
+
         }
 
         public string login(string usu, string contra)
