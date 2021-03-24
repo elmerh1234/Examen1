@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+<hr />
+<fieldset class="form-group">
+    <legend>Formulario Login</legend>
+    <form action="/Home/Login" method="post">
+        <input type="text" name="txtUsu" placeholder="Nombre de usuario" class="form-control" /><br />
+        <input type="password" name="txtContra" placeholder="Contraseña" class="form-control" /><br />
+        <input type="submit" value="Ingresar" class="btn btn-success"/>
+    </form>
+</fieldset>
+
