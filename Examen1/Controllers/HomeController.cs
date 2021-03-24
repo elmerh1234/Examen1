@@ -75,5 +75,13 @@ namespace Examen1.Controllers
             }
             
         }
+
+        public ActionResult LogOut()
+        {
+            Session["nivel"] = null;
+            Session["nombre"] = null;
+
+            return RedirectToAction("Login");
+        }
     }
 }
