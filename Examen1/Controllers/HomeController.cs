@@ -11,6 +11,8 @@ namespace Examen1.Controllers
     public class HomeController : Controller
     {
         DAOUsuarios dao = new DAOUsuarios();
+        DAOProductos daoPro = new DAOProductos();
+        
         
         public ActionResult Index()
         {
@@ -67,7 +69,7 @@ namespace Examen1.Controllers
             {
                 System.Web.HttpContext.Current.Session["nivel"] = nivel;
                 System.Web.HttpContext.Current.Session["nombre"] = usu;
-                return RedirectToAction("Index");
+                return RedirectToAction("Productos");
             }
             else
             {
@@ -82,6 +84,104 @@ namespace Examen1.Controllers
             Session["nombre"] = null;
 
             return RedirectToAction("Login");
+        }
+
+        public ActionResult Productos()
+        {
+            string valor = null;
+            if (Session["nivel"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                if (TempData["valor"] != null)
+                {
+                    valor = TempData["valor"].ToString();
+                }
+                else
+                {
+                    valor = null;
+                }
+                List<Productos> data = new List<Productos>();
+                data = daoPro.getTabla(valor);
+                ViewBag.data = data;
+
+                if (TempData["ins"] != null)
+                {
+                    ViewBag.ins = TempData["ins"];
+                }
+                if (TempData["del"] != null)
+                {
+                    ViewBag.del = TempData["del"];
+                }
+                if (TempData["mod"] != null)
+                {
+                    ViewBag.mod = TempData["mod"];
+                }
+                return View();
+            }
+
+         
+        }
+
+        [HttpPost]
+        public ActionResult busqueda(string valor)
+        {
+            if (valor == "")
+            {
+                valor = null;
+            }
+            TempData["valor"] = valor;
+            return RedirectToAction("Productos");
+        }
+
+        [HttpPost]
+        public ActionResult Productos(Productos p)
+        {
+            List<Productos> data = new List<Productos>();
+            string valor = "";
+            data = daoPro.getTabla(valor);
+            ViewBag.data = data;
+
+            if (ModelState.IsValid)
+            {
+                string opcion = Request.Form["boton"].ToString();
+                string si_eliminar = Request.Form["idProduc"].ToString();
+                switch (opcion)
+                {
+                    case "Guardar":
+                        if (daoPro.insertar(p))
+                        {
+                            TempData["ins"] = true;
+                            return RedirectToAction("Productos");
+                        }
+
+                        break;
+                    case "Eliminar":
+                        if (si_eliminar.Equals("si"))
+                        {
+                            if (daoPro.eliminar(p))
+                            {
+                                TempData["del"] = true;
+                                return RedirectToAction("Productos");
+                            }
+                        }
+                       
+
+                        break;
+
+                    case "Modificar":
+                        if (daoPro.modificar(p))
+                        {
+                            TempData["mod"] = true;
+                            return RedirectToAction("Productos");
+                        }
+                        break;
+                }
+                
+            }
+            return View(p);
         }
     }
 }

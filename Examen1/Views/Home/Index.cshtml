@@ -4,10 +4,10 @@
 }
 
 <pre>
-Sesion iniciada usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLink("Cerrar sesion", "LogOut", "Home")
+Usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLink("Cerrar sesion", "LogOut", "Home")
 </pre>
 
-@*<div class="jumbotron">
+<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
@@ -33,74 +33,4 @@ Sesion iniciada usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLi
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
-</div>*@
-
-<fieldset>
-    <legend>Productos</legend>
-    @Html.ActionLink("Agregar", "AddCliente", "Home", htmlAttributes: new { @class = "btn btn-info text-white m-1" })
-    @using (Html.BeginForm("getDataFilter", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
-    {
-        <div class="form-group mx-sm-3 mb-2">
-            @Html.TextBox("valor", null, htmlAttributes: new { @class = "form-control", @placeholder = "Filtrar" })
-
-
-        </div>
-            <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
-    }
-
-
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">CodCLinete</th>
-                <th scope="col">nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Dui</th>
-                <th scope="col">direccion</th>
-                <th scope="col">nit</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (ViewBag.clientes != null)
-            {
-                foreach (var item in ViewBag.clientes)
-                {
-                    <tr>
-                        <th scope="row">@item.cod_cliente</th>
-                        <td>@item.nombres</td>
-                        <td>@item.apellidos</td>
-                        <td>@item.dui</td>
-                        <td>@item.direccion</td>
-                        <td>@item.nit</td>
-                        <td>
-                            @Html.ActionLink("Modificar", "EditCliente", "Home", new { id = item.cod_cliente }, htmlAttributes: new { @class = "btn btn-warning text-white" })
-                            @*@if (String.Compare(Session@*["nivel"].ToString(), constantes.administrador, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)*@
-                            @*{*@
-
-                            @Html.ActionLink("Eliminar", "DeleteCliente", "Home", new { id = item.cod_cliente }, htmlAttributes: new { @class = "btn btn-danger text-white", onclick = String.Format("return confirm('Desea eliminar al cliente con id: {0}')", item.cod_cliente) });
-
-                            @*@*  *@}
-                        </td>
-                    </tr>
-
-                }
-
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7">
-                        <div class="alert alert-info" role="alert">
-                            No hay resultados
-                        </div>
-                    </td>
-                </tr>
-            }
-
-
-        </tbody>
-    </table>
-
-</fieldset>
+</div>

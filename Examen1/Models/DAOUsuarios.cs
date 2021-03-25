@@ -16,7 +16,8 @@ namespace Examen1.Models
 
         public DAOUsuarios()
         {
-           
+            this.con.ConnectionString = @"Data Source=ELMER\ELMERH; Initial Catalog=examen1ds39; integrated security = true";
+
         }
 
         public string login(string usu, string contra)

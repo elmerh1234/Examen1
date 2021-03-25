@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Productos";
+    
+
+    @model Examen1.Models.Productos
+
+    if (ViewBag.ins == true)
+    {
+        <script>alert('Registro Ingresado');</script>
+    }
+    if (ViewBag.del == true)
+    {
+        <script>alert('Registro Eliminado');</script>
+    }
+    if (ViewBag.mod == true)
+    {
+        <script>alert('Registro Modificado');</script>
+    }
+}
+
+<pre>
+Usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLink("Cerrar sesion", "LogOut", "Home")
+</pre>
+
+<script>
+
+    function cargar(codProd, nombre, descripcion, precioUnit, existencia, garantia) {
+        document.getElementById("codProd").value = codProd;
+        document.getElementById("nombre").value = nombre;
+        document.getElementById("descripcion").value = descripcion;
+        document.getElementById("precioUnit").value = precioUnit;
+        document.getElementById("existencia").value = existencia;
+        document.getElementById("garantia").value = garantia;
+    }
+
+    function confirmar() {
+    
+        if (confirm("¿Esta seguro que desea eliminar el registro seleccionado?")) {
+            document.getElementById("idProduc").value = "si";
+        
+        } else {
+            document.getElementById("idProduc").value = "no";
+          
+        }
+        
+
+
+    }
+
+
+</script>
+
+<h2>Productos</h2>
+
+<div style="float: left;width: 45%;">
+    <fieldset>
+
+        <legend>Formulario de registro</legend>
+        @using (Html.BeginForm("Productos", "Home", FormMethod.Post))
+        {
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            @Html.LabelFor(x => x.nombre, null, htmlAttributes: new { @class = "label label-danger" })
+            @Html.TextBoxFor(x => x.nombre, null, htmlAttributes: new { @class = "form-control" })
+            <br />
+            @Html.LabelFor(x => x.descripcion, null, htmlAttributes: new { @class = "label label-danger" })
+            @Html.TextBoxFor(x => x.descripcion, null, htmlAttributes: new { @class = "form-control" })
+            <br />
+            @Html.LabelFor(x => x.precioUnit, null, htmlAttributes: new { @class = "label label-danger" })
+            @Html.TextBoxFor(x => x.precioUnit, null, htmlAttributes: new { @class = "form-control" })
+            <br />
+            @Html.LabelFor(x => x.existencia, null, htmlAttributes: new { @class = "label label-danger" })
+            @Html.TextBoxFor(x => x.existencia, null, htmlAttributes: new { @class = "form-control" })
+            <br />
+            @Html.LabelFor(x => x.garantia, null, htmlAttributes: new { @class = "label label-danger" })
+            @Html.TextBoxFor(x => x.garantia, null, htmlAttributes: new { @class = "form-control" })
+            <br />
+            <input type="hidden" name="idProduc" id="idProduc" value="" />
+            <input type="hidden" name="codProd" id="codProd" value="0" />
+            <input type="submit" name="boton" value="Guardar" class="btn btn-success" />           
+            <input type="submit" name="boton" value="Modificar" class="btn btn-info" />
+            if ((string)Session["nivel"] == "admin")
+            {
+            <input type="submit" name="boton" value="Eliminar" class="btn btn-danger" onclick="javascript:confirmar()"/>
+                }
+            }
+
+       
+
+    </fieldset>
+
+
+</div>
+
+<div style="float: right; width: 55%;">
+    @using (Html.BeginForm("busqueda", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
+    {
+            <div >
+                @Html.TextBox("valor", null, htmlAttributes: new { @class = "form-control", @placeholder = "Busqueda por cualquier dato" })
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+          
+    }
+    @{
+        if (ViewBag.data != null)
+        {
+            List<Examen1.Models.Productos> data = new List<Examen1.Models.Productos>();
+            data = ViewBag.data;
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Código producto</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio unitario</th>
+                        <th>Existencia</th>
+                        <th>Garantía</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Examen1.Models.Productos item in data)
+                    {
+                        <tr>    
+                            <td>@item.codProd</td>
+                            <td>@item.nombre</td>
+                            <td>@item.descripcion</td>
+                            <td>@item.precioUnit</td>
+                            <td>@item.existencia</td>
+                            <td>@item.garantia</td>
+
+                            <td>
+                                <a href="javascript:cargar('@item.codProd','@item.nombre','@item.descripcion','@item.precioUnit','@item.existencia','@item.garantia')">
+                                    SELECCIONAR
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        }
+    }
+
+
+</div>
+
