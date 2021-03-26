@@ -60,7 +60,9 @@ Usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLink("Cerrar sesio
         @using (Html.BeginForm("Productos", "Home", FormMethod.Post))
         {
             @Html.ValidationSummary("", new { @class = "text-danger" })
-
+            @*@Html.LabelFor(x => x.codProd, null, htmlAttributes: new { @class = "label label-danger" })*@
+            @*@Html.TextBoxFor(x => x.codProd, null, htmlAttributes: new { @class = "form-control" })*@
+            
             @Html.LabelFor(x => x.nombre, null, htmlAttributes: new { @class = "label label-danger" })
             @Html.TextBoxFor(x => x.nombre, null, htmlAttributes: new { @class = "form-control" })
             <br />
@@ -77,9 +79,11 @@ Usuario: @Session["nombre"] (@Session["nivel"]) | @Html.ActionLink("Cerrar sesio
             @Html.TextBoxFor(x => x.garantia, null, htmlAttributes: new { @class = "form-control" })
             <br />
             <input type="hidden" name="idProduc" id="idProduc" value="" />
+            @*<input type="hidden" name="codProd" id="codProd" value="0" />*@
             <input type="hidden" name="codProd" id="codProd" value="0" />
             <input type="submit" name="boton" value="Guardar" class="btn btn-success" />           
             <input type="submit" name="boton" value="Modificar" class="btn btn-info" />
+            <input type="hidden" name="codProd" id="codProd" value="0" />
             if ((string)Session["nivel"] == "admin")
             {
             <input type="submit" name="boton" value="Eliminar" class="btn btn-danger" onclick="javascript:confirmar()"/>

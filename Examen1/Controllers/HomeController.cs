@@ -166,6 +166,9 @@ namespace Examen1.Controllers
                                 TempData["del"] = true;
                                 return RedirectToAction("Productos");
                             }
+                        }else
+                        {
+                            return RedirectToAction("Productos");
                         }
                        
 
